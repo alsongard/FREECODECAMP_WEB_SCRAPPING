@@ -1,0 +1,7 @@
+web_scrapping_projects/bin/
+web_scrapping_projects/lib
+web_scrapping_projects/lib64
+/web_scrapping_projects/pyvenv.cfg
+web_scrapping_projects/include/
+web_scrapping_projects/bookscraper/bookscraper/__pycache__/
+web_scrapping_projects/bookscraper/bookscraper/spiders/__pycache__/
