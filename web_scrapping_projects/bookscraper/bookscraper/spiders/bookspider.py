@@ -10,7 +10,7 @@ class BookspiderSpider(scrapy.Spider):
 
         for book in books:
 
-            relative_url = book.css('h3 a::atrr["href"]')
+            relative_url = book.css('h3 a::attr(href)').get()
 
             if "catalogue/" in relative_url:
                 next_page_data = "https://books.toscrape.com"  + relative_url
@@ -18,7 +18,7 @@ class BookspiderSpider(scrapy.Spider):
                 next_page_data = "https://books.toscrape.com/catalogue/" + relative_url
                 yield response.follow(next_page_data, callback=self.parse_book_page)
         
-        
+        #  the link for the next page
         next_page = response.css('li.next a::attr(href)').get()
     
         # for the last page
