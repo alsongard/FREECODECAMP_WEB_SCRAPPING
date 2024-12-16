@@ -15,18 +15,18 @@ class BookscraperPipeline:
 
         adapter = ItemAdapter(item)
 
-        # field_names = adapter.field_names()
-        # for field_name in field_names:
-        #     if field_name != "description":
-        #         value = adapter.get(field_name)
-        #         adapter[field_name] = value.strip()
+        field_names = adapter.field_names()
+        for field_name in field_names:
+            if field_name != "description":
+                value = adapter.get(field_name)
+                adapter[field_name] = value[0].strip()
 
         ## show price in float
         price_keys = ["price_excl_tax", 'price_incl_tax', 'tax', 'price']
         for price_key in price_keys:
             value = adapter.get(price_key)
             value = value.replace('£', '')
-            adapter[price_key] =float(value)
+            adapter[price_key] = float(value)
 
 
         ## availability -> show number
@@ -40,12 +40,12 @@ class BookscraperPipeline:
             
 
         # convert reviews into interger
-        reviews_string = adapter.get("number_reviews")
-        adapter['num_reviews'] = int[reviews_string]
+        reviews_string = adapter.get("num_reviews")
+        adapter['num_reviews'] = int(reviews_string)
 
 
         # converst starts text into number
-        star_text = adapter.get["stars"]
+        star_text = adapter.get("stars")
         star_string_array =star_text.split(" ") 
         star_string_value = star_string_array[1].lower()
         if star_string_value == "zero":
