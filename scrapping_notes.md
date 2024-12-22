@@ -23,7 +23,7 @@
 - via command line  
 ``scrapy crawl bookspider -O bookData.csv``
 
-appending data to a file
+appending data to a file  
 ``scrapy crawl bookspider -o bookData.csv``
 
 - via Feed setting
@@ -42,10 +42,31 @@ add :
 ```
 customer_settings = {
     'FEEDS' : {
-        'books_new_data' : {'format': 'csv'}
+        'books_new_data' : {'format': 'csv', 'overwrite' : True }
     }
 }
 ```
 in spiderfile.
 - data into database
 
+
+
+## setting up user for mysql:
+
+To start mysql in kali:
+```
+service start mysql
+
+sudo mysql -u root # I had to use "sudo" since it was a new installation
+
+mysql> USE mysql;
+mysql> CREATE USER 'YOUR_SYSTEM_USER'@'localhost' IDENTIFIED BY 'YOUR_PASSWD';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'YOUR_SYSTEM_USER'@'localhost';
+mysql> UPDATE user SET plugin='unix_socket' WHERE User='YOUR_SYSTEM_USER';';
+mysql> FLUSH PRIVILEGES;
+mysql> exit;
+
+
+sudo service mysql restart
+
+```

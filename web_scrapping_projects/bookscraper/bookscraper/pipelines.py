@@ -64,3 +64,97 @@ class BookscraperPipeline:
 
 
         return item
+    
+
+import mysql.connector
+
+class SavetoMySQLPipeLine:
+    def __init__(self):
+        self.database = mysql.connector.connect(
+            host="localhost",
+            user="alson",
+            password="black_hole",
+            database="books"
+        )
+
+        # creating cursor object
+        self.cursor = self.database.cursor()
+
+        sql = """
+            CREATE TABLE IF NOT EXIST books(
+                id INT NOT NULL auto_increment PRIMARY KEY,
+                url VARCHAR(255),
+                title text,
+                upc VARCHAR(255),
+                product_type VARCHAR(255),
+                price_excl_tax DECIMAL,
+                price_incl_tax DECIMAL,
+                tax DECIMAL,
+                price DECIMAL,
+                availability INTEGER,
+                num_reviews INTEGER,
+                stars INTEGER,
+                category VARCHAR(255),
+                description text,
+            )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+            """
+        self.cursor.execute(sql)
+
+    def process_item(self, item, spider):
+
+        # insert data statements
+        self.cursor.execute("""
+            INSERT INTO books(
+                url,
+                title,
+                upc,
+                product_type ,
+                price_excl_tax,
+                price_incl_tax,
+                tax,
+                price ,
+                availability,
+                num_reviews,
+                stars,
+                category,
+                description,
+                )
+            values(
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s                                            
+            )
+        """, (
+            item["url"],
+            item["title"],
+            item["upc"],
+            item["product_type"],
+            item["price_excl_tax"],
+            item["price_incl_tax"],
+            item["tax"],
+            item["price"],
+            item["availability"],
+            item["num_reviews"],
+            item["stars"],
+            item["category"],
+            str(item["description"][0])
+        )
+        )
+        self.database.commit()
+        return item
+    
+
+    def close_spider(self,spider):
+        # close cursor & connection
+        self.cursor.close()
+        self.database.close()
