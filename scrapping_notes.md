@@ -57,7 +57,7 @@ To start mysql in kali:
 ```
 service start mysql
 
-sudo mysql -u root # I had to use "sudo" since it was a new installation
+sudo mysql -h localhost -u root # I had to use "sudo" since it was a new installation
 
 mysql> USE mysql;
 mysql> CREATE USER 'YOUR_SYSTEM_USER'@'localhost' IDENTIFIED BY 'YOUR_PASSWD';
