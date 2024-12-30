@@ -66,6 +66,10 @@ class BookscraperPipeline:
         return item
     
 
+
+
+
+"""
 import mysql.connector
 
 class SavetoMySQLPipeLine:
@@ -80,7 +84,7 @@ class SavetoMySQLPipeLine:
         # creating cursor object
         self.cursor = self.database.cursor()
 
-        sql = """
+        sql = \"""
             CREATE TABLE IF NOT EXIST books(
                 id INT NOT NULL auto_increment PRIMARY KEY,
                 url VARCHAR(255),
@@ -97,13 +101,13 @@ class SavetoMySQLPipeLine:
                 category VARCHAR(255),
                 description text,
             )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-            """
+            \"\"\"
         self.cursor.execute(sql)
 
     def process_item(self, item, spider):
 
         # insert data statements
-        self.cursor.execute("""
+        self.cursor.execute(\"""
             INSERT INTO books(
                 url,
                 title,
@@ -134,7 +138,7 @@ class SavetoMySQLPipeLine:
                 %s,
                 %s                                            
             )
-        """, (
+        \""", (
             item["url"],
             item["title"],
             item["upc"],
@@ -158,3 +162,4 @@ class SavetoMySQLPipeLine:
         # close cursor & connection
         self.cursor.close()
         self.database.close()
+"""
