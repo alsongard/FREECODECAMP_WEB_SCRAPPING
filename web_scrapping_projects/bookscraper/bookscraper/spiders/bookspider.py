@@ -28,8 +28,8 @@ class BookspiderSpider(scrapy.Spider):
                 next_page_data = "https://books.toscrape.com"  + relative_url
             else:
                 next_page_data = "https://books.toscrape.com/catalogue/" + relative_url
-            # yield response.follow(next_page_data, callback=self.parse_book_page,headers={"User-Agent": user_agent_list[random.randint(0, len(user_agent_list)-1)]})
-            yield response.follow(next_page_data, callback=self.parse_book_page) singl user agent
+            yield response.follow(next_page_data, callback=self.parse_book_page,headers={"User-Agent": user_agent_list[random.randint(0, len(user_agent_list)-1)]})
+            # yield response.follow(next_page_data, callback=self.parse_book_page) 
         
         #  the link for the next page
             next_page = response.css('li.next a::attr(href)').get()
@@ -40,8 +40,8 @@ class BookspiderSpider(scrapy.Spider):
                     next_page_url = "https://books.toscrape.com/" + next_page
                 else:
                     next_page_url =  "https://books.toscrape.com/catalogue/" + next_page
-                # yield response.follow(next_page_url, callback= self.parse,headers={"User-Agent": user_agent_list[random.randint(0, len(user_agent_list)-1)]})
-                yield response.follow(next_page_url, callback= self.parse)
+                yield response.follow(next_page_url, callback= self.parse,headers={"User-Agent": user_agent_list[random.randint(0, len(user_agent_list)-1)]})
+                # yield response.follow(next_page_url, callback= self.parse)
         
 
     def parse_book_page(self, response):
